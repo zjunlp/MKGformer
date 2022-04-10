@@ -119,4 +119,20 @@ How to run
     bash run_mre.py
     ```
 
-# Citation
+# Acknowledgement
+
+The acquisition of image data for the multimodal link prediction task refer to the code from[https://github.com/wangmengsd/RSME](https://github.com/wangmengsd/RSME), many thanks.
+
+# Papers for the Project & How to Cite
+If you use or extend our work, please cite the paper as follows:
+
+```
+@inproceedings{sigir2022chenxiang,
+  title     = {Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion},
+  author    = {Chen, Xiang and Zhang, Ningyu and Li Lei and Deng, Shumin and Tan, Chuanqi and Changliang, Xu and Huang, Fei and Si, Luo and Chen, Huajun},
+  booktitle = {Proceedings of the The 45th International ACM Conference on Research and Development in Information Retrieval, {SIGIR-22}},
+  note      = {Main Track}
+  doi       = {10.24963/ijcai.2021/551},
+  url       = {https://doi.org/10.24963/ijcai.2021/551},
+}
+```
