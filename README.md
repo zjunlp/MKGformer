@@ -13,14 +13,14 @@ Model Architecture
  Illustration of MKGformer for (a) Unified Multimodal KGC Framework and (b) Detailed M-Encoder.
 
 
-Requirements
+# Requirements
 ==========
 To run the codes, you need to install the requirements:
 ```
 pip install -r requirements.txt
 ```
 
-Data Collection
+# Data Collection
 ==========
 The datasets that we used in our experiments are as follows:
 
@@ -82,7 +82,7 @@ MKGFormer
  |    |-- run.py
 ```
 
-How to run
+# How to run
 ==========
 
 + ## MKG Task
