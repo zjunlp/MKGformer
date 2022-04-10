@@ -121,7 +121,7 @@ MKGFormer
 
 # Acknowledgement
 
-The acquisition of image data for the multimodal link prediction task refer to the code from[https://github.com/wangmengsd/RSME](https://github.com/wangmengsd/RSME), many thanks.
+The acquisition of image data for the multimodal link prediction task refer to the code from [https://github.com/wangmengsd/RSME](https://github.com/wangmengsd/RSME), many thanks.
 
 # Papers for the Project & How to Cite
 If you use or extend our work, please cite the paper as follows:
