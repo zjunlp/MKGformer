@@ -3,8 +3,8 @@
 Code for the SIGIR 2022 paper "[Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion]()"
 
 
-Model Architecture
-==========
+# Model Architecture
+
 <div align=center>
 <img src="resource/model.png" width="75%" height="75%" />
 </div>
@@ -14,14 +14,14 @@ Model Architecture
 
 
 # Requirements
-==========
+
 To run the codes, you need to install the requirements:
 ```
 pip install -r requirements.txt
 ```
 
 # Data Collection
-==========
+
 The datasets that we used in our experiments are as follows:
 
 
@@ -83,7 +83,7 @@ MKGFormer
 ```
 
 # How to run
-==========
+
 
 + ## MKG Task
 
