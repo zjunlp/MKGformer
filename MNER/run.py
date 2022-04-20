@@ -12,7 +12,7 @@ from models.modeling_clip import CLIPModel
 
 from processor.datasets import MMPNERBertProcessor, MMPNERBertDataset
 from modules.train import BertTrainer
-from utils.utils import get_loss, set_seed
+from utils.utils import set_seed
 
 from transformers import BertConfig, CLIPConfig, BertModel, CLIPProcessor
 
@@ -43,10 +43,10 @@ DATA_PATH = {
 }
 
 AUX_PATH = {
-    'twitter17': {'train': 'data/data_vg/twitter2017/train/crops',
-                'dev': 'data/data_vg/twitter2017/val/crops',
-                'test': 'data/data_vg/twitter2017/test/crops',
-                'predict': 'data/data_vg/twitter2017/test/crops'}
+    'twitter17': {'train': 'data/twitter2017_aux_images/train/crops',
+                'dev': 'data/twitter2017_aux_images/val/crops',
+                'test': 'data/twitter2017_aux_images/test/crops',
+                'predict': 'data/twitter2017_aux_images/test/crops'}
 }
 
 
@@ -54,19 +54,12 @@ IMG_PATH = {
     'twitter17': 'data/twitter2017_images',
 }
 
-MAPPING = {
-    'twitter17': {'loc': '<<location>>',
-                'per': '<<person>>',
-                'org': '<<organization>>',
-                'misc': '<<others>>'},
-}
-
 LABEL_LIST = ["O", "B-MISC", "I-MISC", "B-PER", "I-PER", "B-ORG", "I-ORG", "B-LOC", "I-LOC", "X", "[CLS]", "[SEP]"]
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name', default='bert', type=str, help="model name")
-    parser.add_argument('--dataset_name', default='twitter15', type=str, help="The name of dataset.")
+    parser.add_argument('--dataset_name', default='twitter17', type=str, help="The name of dataset.")
     parser.add_argument('--bert_name', default='bert-base-uncased', type=str, help="Pretrained language model name")
     parser.add_argument('--vit_name', default='vit', type=str, help="The name of vit.")
     parser.add_argument('--num_epochs', default=30, type=int, help="Training epochs")
@@ -75,18 +68,11 @@ def main():
     parser.add_argument('--lr', default=2e-5, type=float, help="learning rate")
     parser.add_argument('--warmup_ratio', default=0.01, type=float)
     parser.add_argument('--eval_begin_epoch', default=16, type=int)
-    parser.add_argument('--num_beams', default=1, type=int, help="beam search size")
     parser.add_argument('--seed', default=1, type=int, help="random seed, default is 1")
-    parser.add_argument('--length_penalty', default=1, type=int)
-    parser.add_argument('--tgt_max_len', default=10, type=int)
-    parser.add_argument('--src_seq_ratio', default=0.6, type=float)
-    parser.add_argument('--prompt_len', default=10, type=int)
-    parser.add_argument('--prompt_dim', default=800, type=int)
     parser.add_argument('--load_path', default=None, type=str, help="Load model from load_path")
     parser.add_argument('--save_path', default=None, type=str, help="save model at save_path")
     parser.add_argument('--write_path', default=None, type=str, help="do_test=True, predictions will be write in write_path")
     parser.add_argument('--notes', default="", type=str, help="input some remarks for making save path dir.")
-    parser.add_argument('--learn_weights', action='store_true', help="If true, don't use extra tokens, the embeddings corresponding to the entity labels are combined with learnable weights.")
     parser.add_argument('--do_train', action='store_true')
     parser.add_argument('--do_test', action='store_true')
     parser.add_argument('--do_predict', action='store_true')
@@ -101,7 +87,6 @@ def main():
 
     data_path, img_path, aux_path = DATA_PATH[args.dataset_name], IMG_PATH[args.dataset_name], AUX_PATH[args.dataset_name]
     data_process, dataset_class = MODEL_CLASS[args.model_name]
-    mapping = MAPPING[args.dataset_name]
 
     transform = transforms.Compose([
         transforms.Resize(256),
@@ -116,44 +101,43 @@ def main():
         if not os.path.exists(args.save_path):
             os.makedirs(args.save_path, exist_ok=True)
     print(args)
-    logdir = "logs/" + args.model_name+ "_"+args.dataset_name+ "_"+str(args.batch_size) + "_" + str(args.lr) + "simple_bert_test"
+    # logdir = "logs/" + args.model_name+ "_"+args.dataset_name+ "_"+str(args.batch_size) + "_" + str(args.lr) + "simple_bert_test"
     # writer = SummaryWriter(logdir=logdir)
     writer = None
     if args.do_train:
-        if args.model_name == 'bert':
-            label_mapping = {label:idx for idx, label in enumerate(LABEL_LIST, 1)}
-            label_mapping["PAD"] = 0
-            
-            clip_vit, clip_processor, aux_processor, rcnn_processor = None, None, None, None
-            clip_processor = CLIPProcessor.from_pretrained(args.vit_name)
-            aux_processor = CLIPProcessor.from_pretrained(args.vit_name)
-            aux_processor.feature_extractor.size, aux_processor.feature_extractor.crop_size = args.aux_size, args.aux_size
-            rcnn_processor = CLIPProcessor.from_pretrained(args.vit_name)
-            rcnn_processor.feature_extractor.size, rcnn_processor.feature_extractor.crop_size = args.rcnn_size, args.rcnn_size
-            clip_model = CLIPModel.from_pretrained(args.vit_name)
-            clip_vit = clip_model.vision_model
+        label_mapping = {label:idx for idx, label in enumerate(LABEL_LIST, 1)}
+        label_mapping["PAD"] = 0
+        
+        clip_vit, clip_processor, aux_processor, rcnn_processor = None, None, None, None
+        clip_processor = CLIPProcessor.from_pretrained(args.vit_name)
+        aux_processor = CLIPProcessor.from_pretrained(args.vit_name)
+        aux_processor.feature_extractor.size, aux_processor.feature_extractor.crop_size = args.aux_size, args.aux_size
+        rcnn_processor = CLIPProcessor.from_pretrained(args.vit_name)
+        rcnn_processor.feature_extractor.size, rcnn_processor.feature_extractor.crop_size = args.rcnn_size, args.rcnn_size
+        clip_model = CLIPModel.from_pretrained(args.vit_name)
+        clip_vit = clip_model.vision_model
 
-            processor = data_process(data_path, args.bert_name, clip_processor=clip_processor, aux_processor=aux_processor, rcnn_processor=rcnn_processor)
-            train_dataset = dataset_class(processor, label_mapping, transform, img_path, aux_path, max_seq=args.max_seq, ignore_idx=args.ignore_idx, aux_size=args.aux_size, rcnn_size=args.rcnn_size, mode='train')
-            train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=4, pin_memory=True)
+        processor = data_process(data_path, args.bert_name, clip_processor=clip_processor, aux_processor=aux_processor, rcnn_processor=rcnn_processor)
+        train_dataset = dataset_class(processor, label_mapping, transform, img_path, aux_path, max_seq=args.max_seq, ignore_idx=args.ignore_idx, aux_size=args.aux_size, rcnn_size=args.rcnn_size, mode='train')
+        train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=4, pin_memory=True)
 
-            dev_dataset = dataset_class(processor, label_mapping, transform, img_path, aux_path, max_seq=args.max_seq, ignore_idx=args.ignore_idx, aux_size=args.aux_size, rcnn_size=args.rcnn_size, mode='dev')
-            dev_dataloader = DataLoader(dev_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4,  pin_memory=True)
+        dev_dataset = dataset_class(processor, label_mapping, transform, img_path, aux_path, max_seq=args.max_seq, ignore_idx=args.ignore_idx, aux_size=args.aux_size, rcnn_size=args.rcnn_size, mode='dev')
+        dev_dataloader = DataLoader(dev_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4,  pin_memory=True)
 
-            test_dataset = dataset_class(processor, label_mapping, transform, img_path, aux_path, max_seq=args.max_seq, ignore_idx=args.ignore_idx, aux_size=args.aux_size, rcnn_size=args.rcnn_size, mode='test')
-            test_dataloader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4,  pin_memory=True)  
+        test_dataset = dataset_class(processor, label_mapping, transform, img_path, aux_path, max_seq=args.max_seq, ignore_idx=args.ignore_idx, aux_size=args.aux_size, rcnn_size=args.rcnn_size, mode='test')
+        test_dataloader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4,  pin_memory=True)  
 
-            # test
-            vision_config = CLIPConfig.from_pretrained(args.vit_name).vision_config
-            text_config = BertConfig.from_pretrained(args.bert_name)
-            model = UnimoCRFModel(LABEL_LIST, args, vision_config, text_config)
+        # test
+        vision_config = CLIPConfig.from_pretrained(args.vit_name).vision_config
+        text_config = BertConfig.from_pretrained(args.bert_name)
+        model = UnimoCRFModel(LABEL_LIST, args, vision_config, text_config)
 
-            trainer = BertTrainer(train_data=train_dataloader, dev_data=dev_dataloader, test_data=test_dataloader, model=model, label_map=label_mapping, args=args, logger=logger, writer=writer)
-            bert = BertModel.from_pretrained(args.bert_name)
-            clip_model_dict = clip_vit.state_dict()
-            text_model_dict = bert.state_dict()
-            trainer.train(clip_model_dict, text_model_dict)
-            torch.cuda.empty_cache()
+        trainer = BertTrainer(train_data=train_dataloader, dev_data=dev_dataloader, test_data=test_dataloader, model=model, label_map=label_mapping, args=args, logger=logger, writer=writer)
+        bert = BertModel.from_pretrained(args.bert_name)
+        clip_model_dict = clip_vit.state_dict()
+        text_model_dict = bert.state_dict()
+        trainer.train(clip_model_dict, text_model_dict)
+        torch.cuda.empty_cache()
         # writer.close()
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ DATASET_NAME="MRE"
 BERT_NAME="bert-base-uncased"
 VIT_NAME="openai/clip-vit-base-patch32"
 
-CUDA_VISIBLE_DEVICES=0 python -u run.py \
+CUDA_VISIBLE_DEVICES=2 python -u run.py \
         --model_name="bert" \
         --vit_name=$VIT_NAME \
         --dataset_name=${DATASET_NAME} \
@@ -28,4 +28,5 @@ CUDA_VISIBLE_DEVICES=0 python -u run.py \
         --max_seq=80 \
         --prompt_len=4 \
         --aux_size=128 \
-        --rcnn_size=64
+        --rcnn_size=64 \
+        --save_path="ckpt"

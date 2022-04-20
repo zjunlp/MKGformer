@@ -1,13 +1,8 @@
 import sys
-
-from PIL import Image
 sys.path.append("..")
 
-import os
-import torch
 from torchcrf import CRF
 from torch import nn
-import torch.nn.functional as F
 from .modeling_unimo import UnimoModel
 from transformers.modeling_outputs import TokenClassifierOutput
 
@@ -60,8 +55,3 @@ class UnimoCRFModel(nn.Module):
             loss=loss,
             logits=logits
         )
-
-
-if __name__ == '__main__':
-    # TODO: 
-    pass

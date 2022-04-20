@@ -86,8 +86,3 @@ class UnimoREModel(nn.Module):
             loss_fn = nn.CrossEntropyLoss()
             return loss_fn(logits, labels.view(-1)), logits
         return logits
-
-
-if __name__ == '__main__':
-    # TODO: 
-    pass

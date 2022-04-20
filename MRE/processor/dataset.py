@@ -38,9 +38,7 @@ class MMREProcessor(object):
 
         assert len(words) == len(relations) == len(heads) == len(tails) == (len(imgids))
 
-        # 辅助图像
         aux_imgs = None
-        # if not self.use_clip_vit:
         aux_path = self.data_path[mode+"_auximgs"]
         aux_imgs = torch.load(aux_path)
         rcnn_imgs = torch.load(self.data_path[mode+'_img2crop'])
@@ -105,7 +103,7 @@ class MMREDataset(Dataset):
             if i == tail_pos[1]:
                 extend_word_list.append('</o>')
             extend_word_list.append(word_list[i])
-        extend_word_list = " ".join(extend_word_list)   # list不会进行子词分词
+        extend_word_list = " ".join(extend_word_list)
         encode_dict = self.tokenizer.encode_plus(text=extend_word_list, max_length=self.max_seq, truncation=True, padding='max_length')
         input_ids, token_type_ids, attention_mask = encode_dict['input_ids'], encode_dict['token_type_ids'], encode_dict['attention_mask']
         input_ids, token_type_ids, attention_mask = torch.tensor(input_ids), torch.tensor(token_type_ids), torch.tensor(attention_mask)

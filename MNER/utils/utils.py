@@ -2,42 +2,7 @@ import torch
 import numpy as np
 import random
 from torch import nn
-import torch.nn.functional as F
 from collections import OrderedDict
-from transformers import BartModel, BartTokenizer
-
-
-def avg_token_embeddings(tokenizer: BartTokenizer, bart_model: BartModel, bart_name, num_tokens):
-    """when initial added tokens, use their averge token emebddings
-
-    Args:
-        tokenizer (BartTokenizer): [description]
-        bart_model (BartModel): [description]
-        bart_name ([type]): [description]
-        num_tokens ([type]): [description]
-
-    Raises:
-        RuntimeError: [description]
-
-    Returns:
-        [type]: [description]
-    """
-    _tokenizer = BartTokenizer.from_pretrained(bart_name)
-    for token in tokenizer.unique_no_split_tokens:
-        if token[:2] == '<<':  # 特殊字符
-            index = tokenizer.convert_tokens_to_ids(tokenizer.tokenize(token))
-            if len(index)>1:
-                raise RuntimeError(f"{token} wrong split")
-            else:
-                index = index[0]
-            assert index>=num_tokens, (index, num_tokens, token)
-            indexes = _tokenizer.convert_tokens_to_ids(_tokenizer.tokenize(token[2:-2]))
-            embed = bart_model.encoder.embed_tokens.weight.data[indexes[0]]
-            for i in indexes[1:]:
-                embed += bart_model.decoder.embed_tokens.weight.data[i]
-            embed /= len(indexes)
-            bart_model.decoder.embed_tokens.weight.data[index] = embed
-    return bart_model
 
 
 def seq_to_mask(seq_len, max_len):
@@ -51,27 +16,6 @@ def seq_to_mask(seq_len, max_len):
     mask = cast_seq.lt(seq_len.unsqueeze(1))
     return mask
 
-def get_loss(tgt_tokens, tgt_seq_len, pred):
-    """
-
-    :param tgt_tokens: bsz x max_len, 包含了的[sos, token, eos]
-    :param pred: bsz x max_len-1 x vocab_size
-    :return:
-    """
-    tgt_seq_len = tgt_seq_len - 1
-    mask = seq_to_mask(tgt_seq_len, max_len=tgt_tokens.size(1) - 1).eq(0)
-    tgt_tokens = tgt_tokens[:, 1:].masked_fill(mask, -100)
-    loss = F.cross_entropy(target=tgt_tokens, input=pred.transpose(1, 2))
-    return loss
-
-def _get_model_device(model):
-    assert isinstance(model, nn.Module)
-
-    parameters = list(model.parameters())
-    if len(parameters) == 0:
-        return None
-    else:
-        return parameters[0].device
 
 def set_seed(seed=2021):
     """sets random seed"""

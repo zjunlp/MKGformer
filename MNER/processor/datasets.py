@@ -1,15 +1,8 @@
 import torch
 import os
-from tqdm import tqdm
-import numpy as np
 from PIL import Image
-from itertools import chain
-from torch.utils.data import Dataset, DataLoader
-from torch.nn.utils.rnn import pad_sequence
-from transformers import BartTokenizer, BertTokenizer
-from torchvision import transforms
-import random
-
+from torch.utils.data import Dataset
+from transformers import BertTokenizer
 
 import logging
 logger = logging.getLogger(__name__)
@@ -49,7 +42,6 @@ class MMPNERBertProcessor(object):
 
         assert len(raw_words) == len(raw_targets) == len(imgs), "{}, {}, {}".format(len(raw_words), len(raw_targets), len(imgs))
         aux_imgs = None
-        # if not self.use_clip_vit:
         aux_path = self.data_path[mode+"_auximgs"]
         aux_imgs = torch.load(aux_path)
 

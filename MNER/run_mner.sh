@@ -13,21 +13,19 @@ DATASET_NAME="twitter17"
 BERT_NAME="bert-base-uncased"
 VIT_NAME="openai/clip-vit-base-patch32"
 
-CUDA_VISIBLE_DEVICES=0 python -u run.py \
+CUDA_VISIBLE_DEVICES=2 python -u run.py \
         --model_name="bert" \
         --dataset_name=${DATASET_NAME} \
         --bert_name=${BERT_NAME} \
         --vit_name=$VIT_NAME \
         --num_epochs=30 \
         --batch_size=16 \
-        --lr=5e-5\
+        --lr=3e-5\
         --warmup_ratio=0.01 \
         --eval_begin_epoch=1 \
         --seed=1234 \
-        --src_seq_ratio=0.6 \
         --do_train \
         --ignore_idx=0 \
         --max_seq=128 \
-        --prompt_len=4 \
         --aux_size=128 \
-        --rcnn_size=64 \
+        --rcnn_size=64
