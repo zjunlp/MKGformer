@@ -126,3 +126,28 @@ The acquisition of image data for the multimodal link prediction task refer to t
 # Papers for the Project & How to Cite
 If you use or extend our work, please cite the paper as follows:
 
+```bibtex
+@article{DBLP:journals/corr/abs-2205-02357,
+  author    = {Xiang Chen and
+               Ningyu Zhang and
+               Lei Li and
+               Shumin Deng and
+               Chuanqi Tan and
+               Changliang Xu and
+               Fei Huang and
+               Luo Si and
+               Huajun Chen},
+  title     = {Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge
+               Graph Completion},
+  journal   = {CoRR},
+  volume    = {abs/2205.02357},
+  year      = {2022},
+  url       = {https://doi.org/10.48550/arXiv.2205.02357},
+  doi       = {10.48550/arXiv.2205.02357},
+  eprinttype = {arXiv},
+  eprint    = {2205.02357},
+  timestamp = {Wed, 11 May 2022 17:29:40 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-2205-02357.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
