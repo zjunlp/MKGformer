@@ -107,7 +107,7 @@ MKGFormer
 
     ```shell
     cd MNER
-    bash run_mner.py
+    bash run_mner.sh
     ```
 
 + ## MRE Task
@@ -116,7 +116,7 @@ MKGFormer
 
     ```shell
     cd MRE
-    bash run_mre.py
+    bash run_mre.sh
     ```
 
 # Acknowledgement
