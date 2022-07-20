@@ -9,3 +9,7 @@ MKG/dataset
 MRE/data
 
 MNER/data
+
+*.gz
+
+ckpt/

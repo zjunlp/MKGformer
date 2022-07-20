@@ -4,7 +4,7 @@ import numpy as np
 from .base import BaseLitModel
 from transformers.optimization import get_linear_schedule_with_warmup
 from functools import partial
-from .utils import rank_score, acc, LabelSmoothSoftmaxCEV1
+from .utils import LabelSmoothSoftmaxCEV1
 from typing import Callable, Iterable, List
 
 def lmap(f: Callable, x: Iterable) -> List:

@@ -7,12 +7,12 @@ import pickle
 import logging
 import inspect
 import contextlib
+from tqdm import tqdm
 from functools import partial
-from tqdm import tqdm, trange
 from collections import Counter
 from multiprocessing import Pool
 from collections import defaultdict
-from dataclasses import dataclass, asdict, replace
+from dataclasses import dataclass, asdict
 from torch.utils.data import Dataset
 from transformers.models.auto.tokenization_auto import AutoTokenizer
 
@@ -102,9 +102,9 @@ def solve(line,  set_type="train", pretrain=1):
             InputExample(guid=guid, text_a="[MASK]", text_b=text_a, text_c = "", label=ent2id[line[0]], real_label=ent2id[line[0]], en=0, rel=0, entity=line[0]))
     else:
         examples.append(
-            InputExample(guid=guid, text_a="[MASK]", text_b=text_b + "[PAD]", text_c = "[UNK]" + " " + text_c, label=lmap(lambda x: ent2id[x], b), real_label=ent2id[line[0]], en=ent2id[line[2]], rel=rel2id[line[1]], entity=line[0]))
+            InputExample(guid=guid, text_a="[MASK]", text_b=text_b + "[PAD]", text_c = "[UNK]" + " " + text_c, label=lmap(lambda x: ent2id[x], b), real_label=ent2id[line[0]], en=ent2id[line[2]], rel=rel2id[line[1]], entity=line[2]))
         examples.append(
-            InputExample(guid=guid, text_a="[UNK] ", text_b=text_b + "[PAD]", text_c = "[MASK]" + text_a, label=lmap(lambda x: ent2id[x], a), real_label=ent2id[line[2]], en=ent2id[line[0]], rel=rel2id[line[1]], entity=line[2]))       
+            InputExample(guid=guid, text_a="[UNK] ", text_b=text_b + "[PAD]", text_c = "[MASK]" + text_a, label=lmap(lambda x: ent2id[x], a), real_label=ent2id[line[2]], en=ent2id[line[0]], rel=rel2id[line[1]], entity=line[0]))       
     return examples
 
 
@@ -610,7 +610,3 @@ class MultiprocessingEncoder(object):
             )
         )
         return features
-
-
-if __name__ == "__main__":
-    dataset = KGCDataset('./dataset')

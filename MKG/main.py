@@ -71,10 +71,10 @@ def main():
     litmodel_class = _import_class(f"lit_models.{args.litmodel_class}") # Lit_model
 
     # load pretrained visual and textual configs, models
-    vision_config = CLIPConfig.from_pretrained('/home/lilei/package/clip-vit-base-patch32').vision_config
-    text_config = BertConfig.from_pretrained('/home/lilei/package/bert-base-uncased')
-    bert = BertModel.from_pretrained('/home/lilei/package/bert-base-uncased')
-    clip_model = CLIPModel.from_pretrained('/home/lilei/package/clip-vit-base-patch32')
+    vision_config = CLIPConfig.from_pretrained('openai/clip-vit-base-patch32').vision_config
+    text_config = BertConfig.from_pretrained('bert-base-uncased')
+    bert = BertModel.from_pretrained('bert-base-uncased')
+    clip_model = CLIPModel.from_pretrained('openai/clip-vit-base-patch32')
     clip_vit = clip_model.vision_model
     
     vision_config.device = 'cpu'

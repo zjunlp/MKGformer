@@ -20,7 +20,17 @@ To run the codes, you need to install the requirements:
 pip install -r requirements.txt
 ```
 
-# Data Collection
+Data Preprocess
+==========
+To extract visual object images int MNER and MRE tasks, we first use the NLTK parser to extract noun phrases from the text and apply the [visual grouding toolkit](https://github.com/zyang-ur/onestage_grounding) to detect objects. Detailed steps are as follows:
+
+1. Using the NLTK parser (or Spacy, textblob) to extract noun phrases from the text.
+2. Applying the [visual grouding toolkit](https://github.com/zyang-ur/onestage_grounding) to detect objects. Taking the twitter2017 dataset as an example, the extracted objects are stored in `twitter2017_aux_images`. The images of the object obey the following naming format: `id_pred_yolo_crop_num.png`, where `id` is the order of the raw image corresponding to the object, `num` is the number of the object predicted by the toolkit. (`id` is doesn't matter.)
+3. Establishing the correspondence between the raw images and the objects. We construct a dictionary to record the correspondence between the raw images and the objects. Taking `twitter2017/twitter2017_train_dict.pth` as an example, the format of the dictionary can be seen as follows: `{imgname:['id_pred_yolo_crop_num0.png', 'id_pred_yolo_crop_num1.png', ...] }`, where key is the name of raw images, value is a List of the objects (Note that in `train/val/test.txt`, text and raw image have a one-to-one relationship, so the `imgnae` can be used as a unique identifier for the raw images).
+
+The detected objects and the dictionary of the correspondence between the raw images and the objects are available in our data links.
+
+# Data Download
 
 The datasets that we used in our experiments are as follows:
 
@@ -67,6 +77,14 @@ MKGFormer
  |    |-- main.py   
  |-- MNER	# Multimodal Named Entity Recognition
  |    |-- data          # task data
+ |    |    |-- twitter2017
+ |    |    |    |-- twitter17_detect            # rcnn detected objects
+ |    |    |    |-- twitter2017_aux_images      # visual grounding objects
+ |    |    |    |-- twitter2017_images          # raw images
+ |    |    |    |-- train.txt                   # text data
+ |    |    |    |-- ...
+ |    |    |    |-- twitter2017_train_dict.pth  # {imgname: [object-image]}
+ |    |    |    |-- ...
  |    |-- models        # mner model
  |    |-- modules       # running script
  |    |-- processor     # data process file
@@ -75,6 +93,17 @@ MKGFormer
  |    |-- run.py
  |-- MRE    # Multimodal Relation Extraction
  |    |-- data          # task data
+ |    |    |-- img_detect   # rcnn detected objects
+ |    |    |-- img_org      # raw images
+ |    |    |-- img_vg       # visual grounding objects
+ |    |    |-- txt          # text data
+ |    |    |    |-- ours_train.txt
+ |    |    |    |-- ours_val.txt
+ |    |    |    |-- ours_test.txt
+ |    |    |    |-- mre_train_dict.pth  # {imgid: [object-image]}
+ |    |    |    |-- ...
+ |    |    |-- vg_data      # [(id, imgname, noun_phrase)], not useful
+ |    |    |-- ours_rel2id.json         # relation data
  |    |-- models        # mre model
  |    |-- modules       # running script
  |    |-- processor     # data process file
