@@ -4,7 +4,7 @@ __pycache__
 
 output/
 
-MKG/dataset
+MKG/dataset/*-images
 
 MRE/data
 
@@ -13,3 +13,5 @@ MNER/data
 *.gz
 
 ckpt/
+
+pretrained_ckpt/

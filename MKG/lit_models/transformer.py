@@ -54,13 +54,13 @@ class TransformerLitModel(BaseLitModel):
         return self.model(x)
 
     def training_step(self, batch, batch_idx):
-        bs = input_ids.shape[0]
         labels = batch.pop("labels")
         label = batch.pop("label")
         input_ids = batch['input_ids']
         logits = self.model(**batch, return_dict=True).logits
-
+        
         _, mask_idx = (input_ids == self.tokenizer.mask_token_id).nonzero(as_tuple=True)
+        bs = input_ids.shape[0]
         mask_logits = logits[torch.arange(bs), mask_idx][:, self.entity_id_st:self.entity_id_ed]
         assert mask_idx.shape[0] == bs, "only one mask in sequence!"
 
@@ -74,7 +74,6 @@ class TransformerLitModel(BaseLitModel):
         return loss
 
     def _eval(self, batch, batch_idx, ):
-        bsz = input_ids.shape[0]
         labels = batch.pop("labels")
         input_ids = batch['input_ids']
         # single label
@@ -82,6 +81,7 @@ class TransformerLitModel(BaseLitModel):
         logits = self.model(**batch, return_dict=True).logits[:, :, self.entity_id_st:self.entity_id_ed] # bsz, len, entites
 
         _, mask_idx = (input_ids == self.tokenizer.mask_token_id).nonzero(as_tuple=True)    # bsz
+        bsz = input_ids.shape[0]
         logits = logits[torch.arange(bsz), mask_idx] # bsz, entites
         # get the entity ranks
         # filter the entity
