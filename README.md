@@ -57,11 +57,11 @@ The datasets that we used in our experiments are as follows:
 
     + FB15K-237-IMG
 
-        For more information regarding the dataset, please refer to the [mmkb](https://github.com/mniepert/mmkb) and [kg-bert](https://github.com/yao8839836/kg-bert) repositories.
+        You can download the image data of FB15k-237 from [mmkb](https://github.com/mniepert/mmkb) which provides a list of image URLs, and refer to more information of description of entity from [kg-bert](https://github.com/yao8839836/kg-bert) repositories.
 
     + WN18-IMG
 
-        For more information regarding the dataset, please refer to the [RSME](https://github.com/wangmengsd/RSME) repository.
+        Entity images in WN18 can be obtained from ImageNet, the specific steps can refer to RSME. the [RSME](https://github.com/wangmengsd/RSME) repository.
 
 The expected structure of files is:
 
