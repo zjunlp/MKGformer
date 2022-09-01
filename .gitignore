@@ -4,7 +4,7 @@ __pycache__
 
 output/
 
-MKG/dataset/*-images
+MKG/dataset
 
 MRE/data
 
