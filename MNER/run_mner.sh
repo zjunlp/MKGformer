@@ -10,9 +10,12 @@
 # rcnn_size: image size of RCNN detected object images
 
 DATASET_NAME="twitter17"
-BERT_NAME="bert-base-uncased"
-VIT_NAME="openai/clip-vit-base-patch32"
+BERT_NAME="/newdisk1/lilei/PLMs/bert-base-uncased"
+VIT_NAME="/newdisk1/lilei/PLMs/clip-vit-base-patch32"
 
+for lr in 1e-5 5e-5
+do
+echo $lr
 CUDA_VISIBLE_DEVICES=2 python -u run.py \
         --model_name="bert" \
         --dataset_name=${DATASET_NAME} \
@@ -20,7 +23,7 @@ CUDA_VISIBLE_DEVICES=2 python -u run.py \
         --vit_name=$VIT_NAME \
         --num_epochs=30 \
         --batch_size=16 \
-        --lr=3e-5\
+        --lr=$lr \
         --warmup_ratio=0.01 \
         --eval_begin_epoch=1 \
         --seed=1234 \
@@ -29,3 +32,4 @@ CUDA_VISIBLE_DEVICES=2 python -u run.py \
         --max_seq=128 \
         --aux_size=128 \
         --rcnn_size=64
+done

@@ -288,16 +288,14 @@ class BertTrainer(object):
         params['params'] = []
         for name, param in self.model.named_parameters():
             if 'text' in name:
-                print(f"{name}'s lr is {self.args.lr}")
                 params['params'].append(param)
         parameters.append(params)
 
          # vit lr
-        params = {'lr':3e-5, 'weight_decay':1e-2}
+        params = {'lr':self.args.lr, 'weight_decay':1e-2}
         params['params'] = []
         for name, param in self.model.named_parameters():
             if 'vision' in name:
-                print(f"{name}'s lr is {1e-5}")
                 params['params'].append(param)
         parameters.append(params)
 
