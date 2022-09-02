@@ -156,7 +156,7 @@ The acquisition of image data for the multimodal link prediction task refer to t
 If you use or extend our work, please cite the paper as follows:
 
 ```bibtex
-@article{DBLP:journals/corr/abs-2205-02357,
+@inproceedings{DBLP:conf/sigir/ChenZLDTXHSC22,
   author    = {Xiang Chen and
                Ningyu Zhang and
                Lei Li and
@@ -166,17 +166,24 @@ If you use or extend our work, please cite the paper as follows:
                Fei Huang and
                Luo Si and
                Huajun Chen},
+  editor    = {Enrique Amig{\'{o}} and
+               Pablo Castells and
+               Julio Gonzalo and
+               Ben Carterette and
+               J. Shane Culpepper and
+               Gabriella Kazai},
   title     = {Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge
                Graph Completion},
-  journal   = {CoRR},
-  volume    = {abs/2205.02357},
+  booktitle = {{SIGIR} '22: The 45th International {ACM} {SIGIR} Conference on Research
+               and Development in Information Retrieval, Madrid, Spain, July 11 -
+               15, 2022},
+  pages     = {904--915},
+  publisher = {{ACM}},
   year      = {2022},
-  url       = {https://doi.org/10.48550/arXiv.2205.02357},
-  doi       = {10.48550/arXiv.2205.02357},
-  eprinttype = {arXiv},
-  eprint    = {2205.02357},
-  timestamp = {Wed, 11 May 2022 17:29:40 +0200},
-  biburl    = {https://dblp.org/rec/journals/corr/abs-2205-02357.bib},
+  url       = {https://doi.org/10.1145/3477495.3531992},
+  doi       = {10.1145/3477495.3531992},
+  timestamp = {Mon, 11 Jul 2022 12:19:20 +0200},
+  biburl    = {https://dblp.org/rec/conf/sigir/ChenZLDTXHSC22.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 ```
