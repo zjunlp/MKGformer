@@ -64,7 +64,7 @@ The datasets that we used in our experiments are as follows:
 
         Entity images in WN18 can be obtained from ImageNet, the specific steps can refer to RSME. the [RSME](https://github.com/wangmengsd/RSME) repository.
 
-We also provide additional network disk links for multimodal KG data [link](https://pan.baidu.com/s/1TVArQSLmPjr2FsC8NkSiOA) with extraction code:ilbd.
+We also provide additional network disk links for **multimodal KG data [link](https://pan.baidu.com/s/1TVArQSLmPjr2FsC8NkSiOA) with extraction code:ilbd**.
 
 The expected structure of files is:
 
