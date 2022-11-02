@@ -57,7 +57,7 @@ The datasets that we used in our experiments are as follows:
 
     + FB15K-237-IMG
 
-        You can download the image data of FB15k-237 from [mmkb](https://github.com/mniepert/mmkb) which provides a list of image URLs, and refer to more information of description of entity from [kg-bert](https://github.com/yao8839836/kg-bert) repositories.
+        You can download the image data of FB15k-237 from [mmkb](https://github.com/mniepert/mmkb) which provides a list of image URLs（we utilize the URLs from bing here）, and refer to more information of description of entity from [kg-bert](https://github.com/yao8839836/kg-bert) repositories.
         - **❗NOTE: we have found a severe bug in the code of data preprocessing for FB15k-237-IMG, which leads to the unfair performance comparison; we have updated the performance in [arxiv](https://arxiv.org/pdf/2205.02357.pdf) and released the [checkpoints](https://drive.google.com/drive/folders/1NsLA7mXaVnhlYNvzRDWIcBxq2CpKF_6m) (The model trained with/without the severe bug).**
 
     + WN18-IMG
