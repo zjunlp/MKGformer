@@ -1,6 +1,6 @@
 # MKGFormer
 
-Code for the SIGIR 2022 paper "[Function Prediction for Understudied Proteins using
+Code for the paper "[Function Prediction for Understudied Proteins using
 Knowledge‐Graph‐enhanced Language Model with Alphafold]()"
 
 
