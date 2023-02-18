@@ -47,7 +47,7 @@ The datasets that we used in our experiments are as follows:
     
     The MRE dataset comes from [MEGA](https://github.com/thecharm/Mega), many thanks.
 
-    You can download the **MRE dataset with detected visual objects** using folloing command:
+    You can download the **MRE dataset with detected visual objects** from [Google Drive](https://drive.google.com/file/d/1q5_5vnHJ8Hik1iLA9f5-6nstcvvntLrS/view?usp=sharing) or using following command:
     
     ```bash
     cd MRE
