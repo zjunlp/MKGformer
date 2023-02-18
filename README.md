@@ -39,7 +39,7 @@ The datasets that we used in our experiments are as follows:
 
 + Twitter2017
     
-    You can download the twitter2017 dataset via this link (https://drive.google.com/file/d/1ogfbn-XEYtk9GpUECq1-IwzINnhKGJqy/view?usp=sharing)
+    You can download the twitter2017 dataset from [Google Drive](https://drive.google.com/file/d/1ogfbn-XEYtk9GpUECq1-IwzINnhKGJqy/view?usp=sharing).
 
     For more information regarding the dataset, please refer to the [UMT](https://github.com/jefferyYu/UMT/) repository.
 
