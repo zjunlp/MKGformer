@@ -17,7 +17,7 @@ Code for the SIGIR 2022 paper "[Hybrid Transformer with Multi-level Fusion for M
 
 # Requirements
 
-To run the codes, you need to install the requirements:
+To run the codes (**Python 3.8**), you need to install the requirements:
 ```
 pip install -r requirements.txt
 ```
