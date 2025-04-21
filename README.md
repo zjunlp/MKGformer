@@ -51,7 +51,7 @@ The datasets that we used in our experiments are as follows:
     
     ```bash
     cd MRE
-    wget 120.27.214.45/Data/re/multimodal/data.tar.gz
+    wget 121.41.117.246/Data/re/multimodal/data.tar.gz
     tar -xzvf data.tar.gz
     ```
 
